@@ -3,6 +3,9 @@ FROM ruby:2.4.1
 RUN apt-get update && apt-get install -y apt-transport-https \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Add sid source
+RUN echo 'deb http://deb.debian.org/debian sid main' >> /etc/apt/sources.list
+
 # Add node source
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 RUN echo 'deb https://deb.nodesource.com/node_8.x jessie main' > /etc/apt/sources.list.d/nodesource.list
@@ -16,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   locales \
   nodejs \
   yarn \
+  shellcheck \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
